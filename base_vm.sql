@@ -7,8 +7,7 @@ Select
   view_CustomerContract.cost_unit As `DEBT GL COA`,
   DATE_FORMAT(view_CustomerContract.start_date,'%Y-%m-%d') As `START DATE`,
   view_CustomerContract.end_date As `END DATE`,
-  view_lnkCustomerContractToFunctionalCI.functionalci_id_friendlyname As
-  `SERVICEID DIRN`,
+  view_VirtualMachine.name As `SERVICEID DIRN`,
   "" As `DESC 2`
 From view_CustomerContract 
 	Inner Join view_lnkCustomerContractToService On view_CustomerContract.id = view_lnkCustomerContractToService.customercontract_id 
