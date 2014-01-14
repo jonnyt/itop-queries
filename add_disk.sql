@@ -3,11 +3,11 @@ Select
   "R" As TYPE,
   "" As `USER ID`,
   CASE 
-  		WHEN view_lnkVirtualDeviceToVolume.volume_name LIKE '%SANS%' OR view_lnkVirtualDeviceToVolume.volume_name LIKE '%-S-%' THEN 'W-VMSPERF'
+  		WHEN view_lnkVirtualDeviceToVolume.volume_name LIKE '%-S-%' THEN 'W-VMSPERF'
 		WHEN view_lnkVirtualDeviceToVolume.volume_name LIKE '%-SSD-%' THEN 'W-VMSPERF'
-	  	WHEN view_lnkVirtualDeviceToVolume.volume_name LIKE '%SANH%' OR view_lnkVirtualDeviceToVolume.volume_name LIKE '%-H-%' THEN 'W-VMSPERF'
-		WHEN view_lnkVirtualDeviceToVolume.volume_name LIKE '%SANL%' OR view_lnkVirtualDeviceToVolume.volume_name LIKE '%-L-%' THEN 'W-VMSUTIL' 
-		WHEN view_lnkVirtualDeviceToVolume.volume_name LIKE '%SANE%' OR view_lnkVirtualDeviceToVolume.volume_name LIKE '%-E-%' THEN 'W-VMSUTIL' 
+	  	WHEN view_lnkVirtualDeviceToVolume.volume_name LIKE '%-H-%' THEN 'W-VMSPERF'
+		WHEN view_lnkVirtualDeviceToVolume.volume_name LIKE '%-L-%' THEN 'W-VMSUTIL' 
+		WHEN view_lnkVirtualDeviceToVolume.volume_name LIKE '%-E-%' THEN 'W-VMSUTIL' 
 		ELSE 'INVALID' 
   END As `ITEM ID`,
 	view_lnkVirtualDeviceToVolume.size_used As QTY,
