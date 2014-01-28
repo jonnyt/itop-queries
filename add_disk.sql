@@ -8,7 +8,7 @@ Select
 	  	WHEN view_lnkVirtualDeviceToVolume.volume_name LIKE '%-H-%' THEN 'W-VMSPERF'
 		WHEN view_lnkVirtualDeviceToVolume.volume_name LIKE '%-L-%' THEN 'W-VMSUTIL' 
 		WHEN view_lnkVirtualDeviceToVolume.volume_name LIKE '%-E-%' THEN 'W-VMSUTIL' 
-		ELSE 'INVALID' 
+		ELSE 'INVALID'
   END As `ITEM ID`,
 	view_lnkVirtualDeviceToVolume.size_used As QTY,
   "" As OVERRIDE,
