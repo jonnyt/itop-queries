@@ -1,16 +1,16 @@
-###  Extra Storage  ###
+### Storage ###
 Select
   "R" As TYPE,
   "" As `USER ID`,
   CASE 
-  		WHEN view_lnkVirtualDeviceToVolume.volume_name LIKE '%-S-%' THEN 'W-VMSPERF'
-		WHEN view_lnkVirtualDeviceToVolume.volume_name LIKE '%-SSD-%' THEN 'W-VMSPERF'
-	  	WHEN view_lnkVirtualDeviceToVolume.volume_name LIKE '%-H-%' THEN 'W-VMSPERF'
-		WHEN view_lnkVirtualDeviceToVolume.volume_name LIKE '%-L-%' THEN 'W-VMSUTIL' 
-		WHEN view_lnkVirtualDeviceToVolume.volume_name LIKE '%-E-%' THEN 'W-VMSUTIL' 
+  		WHEN volume_name LIKE '%CLD%-S-%' THEN 'W-VMSPERF'
+		WHEN volume_name LIKE '%CLD%-SSD-%' THEN 'W-VMSPERF'
+	  	WHEN volume_name LIKE '%CLD%-H-%' THEN 'W-VMSPERF'
+		WHEN volume_name LIKE '%CLD%-L-%' THEN 'W-VMSUTIL' 
+		WHEN volume_name LIKE '%CLD%-E-%' THEN 'W-VMSUTIL' 
 		ELSE 'INVALID'
   END As `ITEM ID`,
-	view_lnkVirtualDeviceToVolume.size_used As QTY,
+	SUM(ROUND(view_lnkVirtualDeviceToVolume.size_used,0)) As QTY,
   "" As OVERRIDE,
   CONVERT(view_CustomerContract.cost_unit USING utf8) As `DEBT GL COA`,
   "" As `START DATE`,
@@ -24,5 +24,13 @@ From view_CustomerContract
 	Inner Join view_VirtualMachine On view_lnkCustomerContractToFunctionalCI.functionalci_id = view_VirtualMachine.id
 	Inner Join view_lnkVirtualDeviceToVolume On view_lnkVirtualDeviceToVolume.virtualdevice_id = view_VirtualMachine.id
 Where
-  (view_lnkCustomerContractToService.service_name = 'Virtual Private Server' OR view_lnkCustomerContractToService.service_name = 'VM Template' ) AND
-	view_VirtualMachine.`status` != 'Obsolete'
+  (view_lnkCustomerContractToService.service_name = 'Virtual Private Server' OR view_lnkCustomerContractToService.service_name = 'VM Template' ) 
+  AND	(view_VirtualMachine.`status` != 'Obsolete') 
+  AND (volume_name LIKE '%CLD%-S-%' 
+  			OR volume_name LIKE '%CLD%-SSD-%' 
+			OR volume_name LIKE '%CLD%-H-%' 
+			OR volume_name LIKE '%CLD%-L-%'
+			OR volume_name LIKE '%CLD%-E-%')
+Group By
+	`SERVICEID DIRN`,
+	`ITEM ID`

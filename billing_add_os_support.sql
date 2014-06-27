@@ -21,4 +21,4 @@ SELECT
 FROM view_CustomerContract
 	Inner Join view_lnkCustomerContractToService On view_CustomerContract.id = view_lnkCustomerContractToService.customercontract_id
 	Inner Join view_lnkCustomerContractToFunctionalCI On view_CustomerContract.id = view_lnkCustomerContractToFunctionalCI.customercontract_id
-WHERE service_name = 'Windows Systems Administration' OR service_name = 'Linux Systems Administration' OR service_name = 'Solaris Systems Administration'
+WHERE (service_name = 'Windows Systems Administration' OR service_name = 'Linux Systems Administration' OR service_name = 'Solaris Systems Administration')

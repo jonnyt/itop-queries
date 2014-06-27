@@ -1,9 +1,9 @@
-###  Extra RAM  ###
+###  Extra CPU  ###
 Select
   "R" As TYPE,
   "" As `USER ID`,
-  "W-VMRAM" As `ITEM ID`,
-  view_VirtualMachine.ram - 1 As QTY,
+  "W-VMCPU" As `ITEM ID`,
+  SUM(view_VirtualMachine.cpu - 1) As QTY,
   "" As OVERRIDE,
   CONVERT(view_CustomerContract.cost_unit USING utf8) As `DEBT GL COA`,
   "" As `START DATE`,
@@ -18,4 +18,6 @@ From view_CustomerContract
 Where
   view_lnkCustomerContractToService.service_name = 'Virtual Private Server' AND
   view_VirtualMachine.`status` != 'Obsolete' AND
-  view_VirtualMachine.ram >= 2
+  view_VirtualMachine.cpu > 1
+Group By
+	`SERVICEID DIRN`
