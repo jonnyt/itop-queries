@@ -3,7 +3,7 @@
 #			Location in vCenter (managed folders)
 #			Not being a template (status=stock)
 #			Not being a DEV machine (status=implementation)
-# I think I need to JOIN on another query that finds all contracts with service type SA where it is a left join null
+
 SELECT vm.name,vm.status,vm.inventory_path,vm.virtualhost_name,lnkCustomerContractToCI.customercontract_name
 FROM view_VirtualMachine vm 
 	LEFT JOIN view_lnkCustomerContractToFunctionalCI lnkCustomerContractToCI ON lnkCustomerContractToCI.functionalci_id = vm.id
