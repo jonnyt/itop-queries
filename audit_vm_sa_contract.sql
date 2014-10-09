@@ -4,13 +4,14 @@
 #			Not being a template (status=stock)
 #			Not being a DEV machine (status=implementation)
 
-SELECT vm.name,vm.status,vm.inventory_path,vm.virtualhost_name,server.location_name
+SELECT vm.name,vm.status,vm.inventory_path,vm.virtualhost_name,server.location_name,lnkCustomerContractToCI.customercontract_name
 FROM view_VirtualMachine vm 
 	LEFT JOIN view_lnkCustomerContractToFunctionalCI lnkCustomerContractToCI ON lnkCustomerContractToCI.functionalci_id = vm.id
 	LEFT JOIN
 		(
 			SELECT customerContract.id,customerContract.name,service_name
-			FROM view_CustomerContract customerContract	JOIN view_lnkCustomerContractToService lnkCutomerContractToSvc ON lnkCutomerContractToSvc.customercontract_id = customerContract.id
+			FROM view_CustomerContract customerContract 
+				JOIN view_lnkCustomerContractToService lnkCutomerContractToSvc ON lnkCutomerContractToSvc.customercontract_id = customerContract.id
 			WHERE service_name LIKE '%Systems Administration'
 		) sysAdminContracts ON sysAdminContracts.id = lnkCustomerContractToCI.customercontract_id
 	LEFT JOIN view_Hypervisor hypervisor ON vm.virtualhost_id = hypervisor.id
@@ -20,4 +21,5 @@ WHERE vm.inventory_path LIKE "%/Managed%"
 	AND vm.status != 'implementation'
 	AND vm.status != 'stock'
 	AND vm.status != 'obsolete'
-	AND lnkCustomerContractToCI.customercontract_name IS NULL
+	AND vm.inventory_path NOT LIKE "%/XenApp Servers%"
+ORDER BY name
