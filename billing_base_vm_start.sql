@@ -6,8 +6,8 @@ Select
   SUM(1) As QTY,
   "" As OVERRIDE,
   CONVERT(view_CustomerContract.cost_unit USING utf8) As `DEBT GL COA`,
-  CONVERT(view_CustomerContract.start_date USING utf8) As `START DATE`,
-  CONVERT(view_CustomerContract.end_date USING utf8) As `END DATE`,
+  DATE_FORMAT(view_CustomerContract.start_date,'%Y-%m-%d') As `START DATE`,
+  DATE_FORMAT(view_CustomerContract.end_date,'%Y-%m-%d') As `END DATE`,
   CONVERT(view_VirtualMachine.name USING utf8) As `SERVICEID DIRN`,
   DATE_FORMAT(view_CustomerContract.start_date,'%Y-%m-%d') As `DESC 2`
 From view_CustomerContract 
